@@ -34,5 +34,7 @@ Disclaimer: This is work-in-progress, and the result of my attempts to create (a
 
 ### Author and licensing
 Author: [Maurits Evers](mailto:maurits.evers@anu.edu.au) 
+
 Date: 30 September 2016
+
 License: GPLv3
