@@ -59,6 +59,9 @@ shinyUI(pageWithSidebar(
             tabPanel("Institution",
                      uiOutput("institutionPlotUI")
                      ),
+            tabPanel("Grants per State/Territory",
+                     uiOutput("statePlotUI")
+            ),
             tabPanel("Gender",
                      uiOutput("genderPlotUI")
                      ),

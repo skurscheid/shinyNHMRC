@@ -2,7 +2,7 @@ library(shiny);
 library(RColorBrewer);
 library(ggplot2);
 library(stringr); # for str_wrap
-library(gender);
+#library(gender);
 
 # Initialise
 d <- read.csv("summary_of_results_2015_app_round_160322.csv",
@@ -248,6 +248,54 @@ shinyServer(function(input, output, session) {
         plotOutput("publicationsPerGrantPlot", height = input$canvasHeight)
     })
 
+    output$statePlot <- renderPlot({
+      # Remove NAs, N/As, and empty strings
+      keep <- which(
+        d$State != "" &
+          d$State != "NA" &
+          d$State != "N/A");
+      data <- d[keep, ];
+      # Set colors
+      nState <- length(unique(data$State));
+      col <- colorRampPalette(brewer.pal(8, "Dark2"))(nState);
+      names(col) <- sort(unique(data$State));
+      # Filter based on grant type
+      if (input$grantType != "All") {
+        data <- data[which(d$Grant.Type == input$grantType), ];
+      }
+      # Select states from data and make frequency table
+      df <- as.data.frame(table(data$State));
+      if (input$minFreq > 0) {
+        df <- df[which(df$Freq >= input$minFreq), ];
+      }
+      # Plot
+      if (input$asPercentage == TRUE) {
+        df$Freq <- df$Freq / sum(df$Freq) * 100;
+      }
+      df$Fill <- col[match(df$Var1, names(col))];
+      df$Var1 <- factor(df$Var1, levels = rev(levels(df$Var1)));
+      gg <- ggplot(df, aes(x = Var1, y = Freq, fill = Var1));
+      gg <- gg + geom_bar(stat = "identity");
+      gg <- gg + scale_fill_manual(values = rev(df$Fill));
+      gg <- gg + coord_flip();
+      gg <- gg + xlab("State/Territory");
+      if (input$asPercentage == TRUE) {
+        gg <- gg + ylab("Percentage of grants");
+      } else {
+        gg <- gg + ylab("Number of grants");
+      }
+      gg <- gg + theme_bw();
+      gg <- gg + theme(axis.text = element_text(size = input$fontLabel),
+                       axis.title.x = element_text(size = input$fontAxes),
+                       axis.title.y = element_text(size = input$fontAxes));
+      gg <- gg + guides(fill = FALSE);
+      print(gg);
+    })
+    
+    output$statePlotUI <- renderUI({
+      plotOutput("statePlot", height = input$canvasHeight)
+    })
+    
     
 })
 
