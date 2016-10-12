@@ -53,7 +53,7 @@ shinyServer(function(input, output, session) {
                          axis.title.x = element_text(size = input$fontAxes),
                          axis.title.y = element_text(size = input$fontAxes));
         gg <- gg + guides(fill = FALSE);
-        print(gg);
+        return(gg);
     })
 
     output$institutionPlotUI <- renderUI({
@@ -108,7 +108,7 @@ shinyServer(function(input, output, session) {
                          axis.title.x = element_text(size = input$fontAxes),
                          axis.title.y = element_text(size = input$fontAxes));
         gg <- gg + guides(fill = FALSE);
-        print(gg);
+        return(gg);
     })
     
     output$genderPlotUI <- renderUI({
@@ -156,7 +156,7 @@ shinyServer(function(input, output, session) {
                          axis.title.x = element_text(size = input$fontAxes),
                          axis.title.y = element_text(size = input$fontAxes));
         gg <- gg + guides(fill = FALSE);
-        print(gg);
+        return(gg);
     })
 
     output$keywordPlotUI <- renderUI({
@@ -200,7 +200,7 @@ shinyServer(function(input, output, session) {
                          axis.title.y = element_text(size = input$fontAxes));
         gg <- gg + guides(fill = FALSE);
         gg <- gg + scale_x_discrete(labels = function(x) str_wrap(x, width = 100));
-        print(gg);
+        return(gg);
     })
 
     output$publicationPlotUI <- renderUI({
@@ -241,7 +241,7 @@ shinyServer(function(input, output, session) {
                          axis.title.x = element_text(size = input$fontAxes),
                          axis.title.y = element_text(size = input$fontAxes));
         gg <- gg + guides(fill = FALSE);
-        print(gg);
+        return(gg);
     })
 
     output$publicationsPerGrantPlotUI <- renderUI({
@@ -289,7 +289,7 @@ shinyServer(function(input, output, session) {
                        axis.title.x = element_text(size = input$fontAxes),
                        axis.title.y = element_text(size = input$fontAxes));
       gg <- gg + guides(fill = FALSE);
-      print(gg);
+      return(gg);
     })
     
     output$statePlotUI <- renderUI({

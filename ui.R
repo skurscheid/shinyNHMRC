@@ -48,7 +48,9 @@ shinyUI(pageWithSidebar(
         div(tags$div(class = "header",
                      checked = NA,
                      tags$p("Visualisation with Shiny. In case of questions contact"),
-                     tags$a(href = "mailto:maurits.evers@anu.edu.au", "Maurits Evers")),
+                     tags$a(href = "mailto:maurits.evers@anu.edu.au", "Maurits Evers"),
+                     tags$p("or"),
+                     tags$a(href = "mailto:sebastian.kurscheid@anu.edu.au", "Sebastian Kurscheid")),
             style = "font-size:75%"),
         width = 4
         ),
