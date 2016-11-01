@@ -2,7 +2,7 @@ library(shiny);
 library(RColorBrewer);
 library(ggplot2);
 library(stringr); # for str_wrap
-#library(gender);
+library(gender);
 
 # Initialise
 d <- read.csv("summary_of_results_2015_app_round_160322.csv",
@@ -10,6 +10,9 @@ d <- read.csv("summary_of_results_2015_app_round_160322.csv",
 load(file = "journals_2015.rda");
 journals <- journals[which(sapply(journals, length) < 100)];
 
+# some app-wide parameters
+
+# actual shiny functions
 shinyServer(function(input, output, session) {
 
     output$institutionPlot <- renderPlot({
@@ -248,6 +251,7 @@ shinyServer(function(input, output, session) {
         plotOutput("publicationsPerGrantPlot", height = input$canvasHeight)
     })
 
+    # added by SK
     output$statePlot <- renderPlot({
       # Remove NAs, N/As, and empty strings
       keep <- which(
@@ -292,8 +296,12 @@ shinyServer(function(input, output, session) {
       return(gg);
     })
     
+    # added by SK
     output$statePlotUI <- renderUI({
-      plotOutput("statePlot", height = input$canvasHeight)
+      plotOutput("statePlot", 
+                 height = input$canvasHeight,
+                 hover = hoverOpts(id = "plot_hover", delayType = "throttle")
+      )
     })
     
     
